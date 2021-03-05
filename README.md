@@ -78,12 +78,12 @@ An example of a basic payment transaction using this library is shown below:
 ```javascript
 import Transport from "@ledgerhq/hw-transport-node-hid";
 // import Transport from "@ledgerhq/hw-transport-u2f"; // for browser
-import Xrp from "@ledgerhq/hw-app-brt";
+import Brt from "@ledgerhq/hw-app-brt";
 import { encode } from 'ripple-binary-codec';
 
 function establishConnection() {
     return Transport.create()
-        .then(transport => new Xrp(transport));
+        .then(transport => new Brt(transport));
 }
 
 function fetchAddress(brt) {
