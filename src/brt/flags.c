@@ -181,12 +181,12 @@ static void format_offer_create_flags(uint32_t value, field_value_t *dst) {
 
 static void format_payment_flags(uint32_t value, field_value_t *dst) {
 // Payment flags
-#define TF_NO_RIPPLE_DIRECT 0x00010000u
+#define TF_NO_BRT_DIRECT 0x00010000u
 #define TF_PARTIAL_PAYMENT  0x00020000u
 #define TF_LIMIT_QUALITY    0x00040000u
 
     size_t offset = 0;
-    if (HAS_FLAG(value, TF_NO_RIPPLE_DIRECT)) {
+    if (HAS_FLAG(value, TF_NO_BRT_DIRECT)) {
         offset = append_item(dst, offset, "No Direct Ripple");
     }
 
