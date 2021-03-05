@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,33 +16,13 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_XRPPARSE_H
-#define LEDGER_APP_XRP_XRPPARSE_H
+#pragma once
 
-#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
 
-#include "os.h"
-#include "cx.h"
 #include "fields.h"
-#include "../limitations.h"
 
-typedef struct {
-    uint8_t num_fields;
-    field_t fields[MAX_FIELD_COUNT];
-} parseResult_t;
+bool read_hex(char *dst, size_t dst_size, uint8_t *src, size_t src_size);
 
-typedef struct {
-    uint16_t transaction_type;
-    bool has_empty_pub_key;
-    uint8_t *data;
-    uint32_t length;
-    uint32_t offset;
-    parseResult_t result;
-    uint8_t current_array;
-    uint8_t array_index1;
-    uint8_t array_index2;
-} parseContext_t;
-
-int parse_tx(parseContext_t *parse_context);
-
-#endif  // LEDGER_APP_XRP_XRPPARSE_H
+uint64_t read_unsigned64(const uint8_t *src);

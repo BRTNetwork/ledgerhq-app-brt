@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +15,9 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_COMMON_H
-#define LEDGER_APP_XRP_COMMON_H
+#ifndef LEDGER_APP_BRT_COMMON_H
+#define LEDGER_APP_BRT_COMMON_H
 
 typedef void (*action_t)();
 
-#endif  // LEDGER_APP_XRP_COMMON_H
+#endif  // LEDGER_APP_BRT_COMMON_H

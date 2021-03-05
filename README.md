@@ -1,14 +1,14 @@
-# XRP Wallet App for Ledger Nano S and Ledger Nano X
+# BRT Wallet App for Ledger Nano S and Ledger Nano X
 
 ## Introduction
-This repository contains the source code for the XRP wallet app that makes it possible to securely store XRP and assets issued on the XRP Ledger using Ledger Nano S and Ledger Nano X devices. 
+This repository contains the source code for the BRT wallet app that makes it possible to securely store BRT and assets issued on the BRT Ledger using Ledger Nano S and Ledger Nano X devices. 
 
 To add Ledger Nano S and Ledger Nano X support in your application, please see the
-NPM package [hw-app-xrp](https://www.npmjs.com/package/@ledgerhq/hw-app-xrp)
+NPM package [hw-app-brt](https://www.npmjs.com/package/@ledgerhq/hw-app-brt)
 and the examples below. 
 
 ## Features
-The XRP wallet app comes with the following features:
+The BRT wallet app comes with the following features:
 
   - Support for all transaction types:
     - AccountSet
@@ -72,13 +72,13 @@ Page to either 'Sign transaction' or 'Reject' and press both buttons simultaneou
 
 ## Usage
 In order to initiate transactions from NodeJS or a browser client, the library
-[hw-app-xrp](https://www.npmjs.com/package/@ledgerhq/hw-app-xrp) can be used.
+[hw-app-brt](https://www.npmjs.com/package/@ledgerhq/hw-app-brt) can be used.
 
 An example of a basic payment transaction using this library is shown below:
 ```javascript
 import Transport from "@ledgerhq/hw-transport-node-hid";
 // import Transport from "@ledgerhq/hw-transport-u2f"; // for browser
-import Xrp from "@ledgerhq/hw-app-xrp";
+import Xrp from "@ledgerhq/hw-app-brt";
 import { encode } from 'ripple-binary-codec';
 
 function establishConnection() {
@@ -86,10 +86,10 @@ function establishConnection() {
         .then(transport => new Xrp(transport));
 }
 
-function fetchAddress(xrp) {
-    return xrp.getAddress("44'/144'/0'/0/0").then(deviceData => {
+function fetchAddress(brt) {
+    return brt.getAddress("44'/144'/0'/0/0").then(deviceData => {
         return {
-            xrp,
+            brt,
             address: deviceData.address,
             publicKey: deviceData.publicKey.toUpperCase()
         }
@@ -106,7 +106,7 @@ function signTransaction(context, transaction) {
     const transactionBlob = encode(preparedTransaction);
 
     console.log('Sending transaction to device for approval...');
-    return context.xrp.signTransaction("44'/144'/0'/0/0", transactionBlob);
+    return context.brt.signTransaction("44'/144'/0'/0/0", transactionBlob);
 }
 
 const transactionJSON = {
@@ -119,7 +119,7 @@ const transactionJSON = {
 };
 
 establishConnection()
-    .then(xrp => fetchAddress(xrp))
+    .then(brt => fetchAddress(brt))
     .then(context => signTransaction(context, transactionJSON))
     .then(signature => console.log(`Signature: ${signature}`))
     .catch(e => console.log(`An error occurred (${e.message})`));
@@ -127,7 +127,7 @@ establishConnection()
 
 ### Advanced Usage
 #### Multi-signing a Transaction
-It is also possible to perform parallel multi-signing using the XRP wallet 
+It is also possible to perform parallel multi-signing using the BRT wallet 
 app. This is done by sourcing a list of signatures for the transaction
 and appending them to the `Signers` field of the transaction before submitting 
 it for processing. An example of combining a couple of externally sourced signatures 
@@ -165,7 +165,7 @@ const otherSigners = [
 
 function retrieveSignerData(transaction) {
     return establishConnection()
-        .then(xrp => fetchAddress(xrp))
+        .then(brt => fetchAddress(brt))
         .then(context => {
             return signTransaction(context, transaction)
                 .then(signature => {
@@ -196,14 +196,14 @@ retrieveSignerData(transactionJSON)
 ```
 
 ### Additional Notes
-From version 2.0.0 of the XRP wallet app it is possible to sign larger
+From version 2.0.0 of the BRT wallet app it is possible to sign larger
 transactions than in previous versions. In order to enable support for larger transactions
 there have been slight modifications to the transport protocol, which is used to 
 communicate between the client and the device.
 
 The protocol changes are fully backwards-compatible with previous versions of
-[hw-app-xrp](https://www.npmjs.com/package/@ledgerhq/hw-app-xrp), but in order
-to sign larger transactions you must use version 5.12.0 or above of [hw-app-xrp](https://www.npmjs.com/package/@ledgerhq/hw-app-xrp).
+[hw-app-brt](https://www.npmjs.com/package/@ledgerhq/hw-app-brt), but in order
+to sign larger transactions you must use version 5.12.0 or above of [hw-app-brt](https://www.npmjs.com/package/@ledgerhq/hw-app-brt).
 
 ### Limitations
 Because of resource constraints the following limits apply for the respective
@@ -239,6 +239,6 @@ make load
 
 ## Testing
 Manual testing can be conducted with the help of the testing utility 
-[TowoLabs/ledger-tests-xrp](https://github.com/TowoLabs/ledger-tests-xrp).
+[TowoLabs/ledger-tests-brt](https://github.com/TowoLabs/ledger-tests-brt).
 Make sure that your device is running the latest firmware and then follow
 the instructions in the test repository.

@@ -1,5 +1,6 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
+ *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,15 +16,17 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_TIME_H
-#define LEDGER_APP_XRP_TIME_H
+#ifndef LEDGER_APP_BRT_FLAGS_H
+#define LEDGER_APP_BRT_FLAGS_H
 
 #include <stdbool.h>
 #include "fields.h"
 
-bool is_time(field_t* field);
-bool is_time_delta(field_t* field);
-void format_time(field_t* field, field_value_t* dst);
-void format_time_delta(field_t* field, field_value_t* dst);
+// Universal Transaction flags (hidden)
+#define TF_FULLY_CANONICAL_SIG 0x80000000u
 
-#endif  // LEDGER_APP_XRP_TIME_H
+bool is_flag(field_t* field);
+bool is_flag_hidden(field_t* field);
+void format_flags(field_t* field, field_value_t* dst);
+
+#endif  // LEDGER_APP_BRT_FLAGS_H

@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "xrp_helpers.h"
+#include "brt_helpers.h"
 #include "os.h"
 #include "number_helpers.h"
 #include "limitations.h"
@@ -34,7 +34,7 @@ static const char bas_e58_alphabet[] = {'b', 'r', 't', 's', 'h', 'n', 'a', 'f', 
                                         'c', 'd', 'e', 'C', 'g', '6', '5', 'j', 'k', 'm', '8', 'o', 
                                         'F', 'q', 'i', '1', 'u', 'v', 'A', 'x', 'y', 'z'};
 
-static size_t xrp_encode_base58_address(const base58_buf_t *in, xrp_address_t *out) {
+static size_t brt_encode_base58_address(const base58_buf_t *in, brt_address_t *out) {
     unsigned char buffer[MAX_ENC_INPUT_SIZE * 138 / 100 + 1] = {0};
     size_t i = 0, j;
     size_t start_at, stop_at;
@@ -78,7 +78,7 @@ static size_t xrp_encode_base58_address(const base58_buf_t *in, xrp_address_t *o
     return outlen;
 }
 
-void xrp_public_key_hash160(xrp_pubkey_t *pubkey, uint8_t *out) {
+void brt_public_key_hash160(brt_pubkey_t *pubkey, uint8_t *out) {
     union {
         cx_sha256_t shasha;
         cx_ripemd160_t riprip;
@@ -91,9 +91,9 @@ void xrp_public_key_hash160(xrp_pubkey_t *pubkey, uint8_t *out) {
     cx_hash(&u.riprip.header, CX_LAST, buffer, 32, out, 20);
 }
 
-size_t xrp_public_key_to_encoded_base58(xrp_pubkey_t *pubkey,
-                                        xrp_account_t *account,
-                                        xrp_address_t *out,
+size_t brt_public_key_to_encoded_base58(brt_pubkey_t *pubkey,
+                                        brt_account_t *account,
+                                        brt_address_t *out,
                                         uint16_t version) {
     base58_buf_t tmp;
     unsigned char checksum_buffer[32];
@@ -108,7 +108,7 @@ size_t xrp_public_key_to_encoded_base58(xrp_pubkey_t *pubkey,
     }
 
     if (pubkey != NULL) {
-        xrp_public_key_hash160(pubkey, tmp.buf + version_size);
+        brt_public_key_hash160(pubkey, tmp.buf + version_size);
     } else {
         memmove(tmp.buf + version_size, account->buf, sizeof(account->buf));
     }
@@ -121,10 +121,10 @@ size_t xrp_public_key_to_encoded_base58(xrp_pubkey_t *pubkey,
     memmove(tmp.buf + 20 + version_size, checksum_buffer, 4);
     tmp.length = 24 + version_size;
 
-    return xrp_encode_base58_address(&tmp, out);
+    return brt_encode_base58_address(&tmp, out);
 }
 
-void xrp_compress_public_key(cx_ecfp_public_key_t *public_key, xrp_pubkey_t *out) {
+void brt_compress_public_key(cx_ecfp_public_key_t *public_key, brt_pubkey_t *out) {
     if (public_key->curve == CX_CURVE_256K1) {
         out->buf[0] = ((public_key->W[64] & 1u) ? 0x03 : 0x02);
         memmove(out->buf + 1, public_key->W + 1, 32);
@@ -157,12 +157,12 @@ bool parse_bip32_path(uint8_t *path,
     return true;
 }
 
-void get_address(cx_ecfp_public_key_t *pubkey, xrp_address_t *address) {
-    /* sizeof(xrp_pubkey_t) < sizeof(xrp_address_t) */
-    xrp_pubkey_t *p = (xrp_pubkey_t *) address;
-    xrp_compress_public_key(pubkey, p);
+void get_address(cx_ecfp_public_key_t *pubkey, brt_address_t *address) {
+    /* sizeof(brt_pubkey_t) < sizeof(brt_address_t) */
+    brt_pubkey_t *p = (brt_pubkey_t *) address;
+    brt_compress_public_key(pubkey, p);
 
-    uint8_t addr_len = xrp_public_key_to_encoded_base58(p, NULL, address, 0);
+    uint8_t addr_len = brt_public_key_to_encoded_base58(p, NULL, address, 0);
     address->buf[addr_len] = '\x00';
 }
 
@@ -234,11 +234,11 @@ bool adjust_decimals(const char *src,
     return true;
 }
 
-#define CURRENCY      "XRP "
+#define CURRENCY      "BRT "
 #define CURRENCY_SIZE (sizeof(CURRENCY) - 1)
 
 /* return -1 on error, 0 otherwise */
-int xrp_print_amount(uint64_t amount, char *out, size_t outlen) {
+int brt_print_amount(uint64_t amount, char *out, size_t outlen) {
     char tmp[20];
     uint32_t num_digits = 0, i;
     uint64_t base;

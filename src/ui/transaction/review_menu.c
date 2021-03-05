@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +22,7 @@
 #include <ux.h>
 #include "../../apdu/global.h"
 #include "../../transaction/transaction.h"
-#include "../../xrp/format.h"
+#include "../../brt/format.h"
 
 parseResult_t *transaction;
 resultAction_t approval_menu_callback;

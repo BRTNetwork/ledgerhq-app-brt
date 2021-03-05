@@ -1,5 +1,6 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
+ *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +16,17 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#pragma once
+#ifndef LEDGER_APP_BRT_GENERAL_H
+#define LEDGER_APP_BRT_GENERAL_H
 
-#include <stdint.h>
+#include "fields.h"
 
-char int_to_number_char(uint64_t value);
+void uint8_formatter(field_t* field, field_value_t* dst);
+void uint16_formatter(field_t* field, field_value_t* dst);
+void uint32_formatter(field_t* field, field_value_t* dst);
+void hash_formatter128(field_t* field, field_value_t* dst);
+void hash_formatter256(field_t* field, field_value_t* dst);
+void blob_formatter(field_t* field, field_value_t* dst);
+void account_formatter(field_t* field, field_value_t* dst);
+
+#endif  // LEDGER_APP_BRT_GENERAL_H

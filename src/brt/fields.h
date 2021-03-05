@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +15,8 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_FIELDS_H
-#define LEDGER_APP_XRP_FIELDS_H
+#ifndef LEDGER_APP_BRT_FIELDS_H
+#define LEDGER_APP_BRT_FIELDS_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -42,31 +42,31 @@ typedef enum {
 } field_type_t;
 
 // Small collection of used field IDs
-#define XRP_UINT16_TRANSACTION_TYPE     0x02
-#define XRP_UINT32_FLAGS                0x02
-#define XRP_UINT32_SEQUENCE             0x04
-#define XRP_UINT32_EXPIRATION           0x0A
-#define XRP_UINT32_TRANSFER_RATE        0x0B
-#define XRP_UINT32_QUALITY_IN           0x14
-#define XRP_UINT32_QUALITY_OUT          0x15
-#define XRP_UINT32_LAST_LEDGER_SEQUENCE 0x1B
-#define XRP_UINT32_SET_FLAG             0x21
-#define XRP_UINT32_CLEAR_FLAG           0x22
-#define XRP_UINT32_CANCEL_AFTER         0x24
-#define XRP_UINT32_FINISH_AFTER         0x25
-#define XRP_UINT32_SETTLE_DELAY         0x27
-#define XRP_VL_SIGNING_PUB_KEY          0x03
-#define XRP_VL_DOMAIN                   0x07
-#define XRP_VL_MEMO_TYPE                0x0C
-#define XRP_VL_MEMO_DATA                0x0D
-#define XRP_VL_MEMO_FORMAT              0x0E
-#define XRP_ACCOUNT_ACCOUNT             0x01
-#define XRP_ACCOUNT_DESTINATION         0x03
-#define XRP_ACCOUNT_ISSUER              0x04
-#define XRP_ACCOUNT_REGULAR_KEY         0x08
-#define XRP_CURRENCY_CURRENCY           0x01
-#define XRP_UINT64_AMOUNT               0x01
-#define XRP_UINT64_FEE                  0x08
+#define BRT_UINT16_TRANSACTION_TYPE     0x02
+#define BRT_UINT32_FLAGS                0x02
+#define BRT_UINT32_SEQUENCE             0x04
+#define BRT_UINT32_EXPIRATION           0x0A
+#define BRT_UINT32_TRANSFER_RATE        0x0B
+#define BRT_UINT32_QUALITY_IN           0x14
+#define BRT_UINT32_QUALITY_OUT          0x15
+#define BRT_UINT32_LAST_LEDGER_SEQUENCE 0x1B
+#define BRT_UINT32_SET_FLAG             0x21
+#define BRT_UINT32_CLEAR_FLAG           0x22
+#define BRT_UINT32_CANCEL_AFTER         0x24
+#define BRT_UINT32_FINISH_AFTER         0x25
+#define BRT_UINT32_SETTLE_DELAY         0x27
+#define BRT_VL_SIGNING_PUB_KEY          0x03
+#define BRT_VL_DOMAIN                   0x07
+#define BRT_VL_MEMO_TYPE                0x0C
+#define BRT_VL_MEMO_DATA                0x0D
+#define BRT_VL_MEMO_FORMAT              0x0E
+#define BRT_ACCOUNT_ACCOUNT             0x01
+#define BRT_ACCOUNT_DESTINATION         0x03
+#define BRT_ACCOUNT_ISSUER              0x04
+#define BRT_ACCOUNT_REGULAR_KEY         0x08
+#define BRT_CURRENCY_CURRENCY           0x01
+#define BRT_UINT64_AMOUNT               0x01
+#define BRT_UINT64_FEE                  0x08
 
 // Array of type one is reserved for end-of-array marker so this
 // constant cannot possibly collide with anything in the future
@@ -76,16 +76,16 @@ typedef enum {
 #define PATHSET_NEXT 0xFF
 #define PATHSET_END  0x00
 
-#define XRP_ACCOUNT_SIZE  20
-#define XRP_CURRENCY_SIZE 20
+#define BRT_ACCOUNT_SIZE  20
+#define BRT_CURRENCY_SIZE 20
 
 typedef struct {
-    uint8_t buf[XRP_ACCOUNT_SIZE];
-} xrp_account_t;
+    uint8_t buf[BRT_ACCOUNT_SIZE];
+} brt_account_t;
 
 typedef struct {
-    uint8_t buf[XRP_CURRENCY_SIZE];
-} xrp_currency_t;
+    uint8_t buf[BRT_CURRENCY_SIZE];
+} brt_currency_t;
 
 typedef struct {
     uint8_t type;
@@ -111,8 +111,8 @@ typedef struct {
         uint32_t u32;
         hash128_t *hash128;
         hash256_t *hash256;
-        xrp_account_t *account;
-        xrp_currency_t *currency;
+        brt_account_t *account;
+        brt_currency_t *currency;
         uint8_t *ptr;
     } data;
     array_info_t array_info;
@@ -130,4 +130,4 @@ bool is_normal_account_field(field_t *field);
 const char *resolve_field_name(field_t *field);
 bool is_field_hidden(field_t *field);
 
-#endif  // LEDGER_APP_XRP_FIELDS_H
+#endif  // LEDGER_APP_BRT_FIELDS_H

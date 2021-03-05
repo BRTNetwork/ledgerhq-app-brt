@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +15,12 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_TRANSACTIONTYPES_H
-#define LEDGER_APP_XRP_TRANSACTIONTYPES_H
+#ifndef LEDGER_APP_BRT_TRANSACTIONTYPES_H
+#define LEDGER_APP_BRT_TRANSACTIONTYPES_H
 
 #include <stdbool.h>
 
-#include "xrp_parse.h"
+#include "brt_parse.h"
 
 #define TRANSACTION_INVALID                0xFFFF
 #define TRANSACTION_PAYMENT                0
@@ -43,7 +43,7 @@
 #define TRANSACTION_ACCOUNT_DELETE         21
 
 static inline bool is_transaction_type_field(field_t *field) {
-    return field->data_type == STI_UINT16 && field->id == XRP_UINT16_TRANSACTION_TYPE;
+    return field->data_type == STI_UINT16 && field->id == BRT_UINT16_TRANSACTION_TYPE;
 }
 
-#endif  // LEDGER_APP_XRP_TRANSACTIONTYPES_H
+#endif  // LEDGER_APP_BRT_TRANSACTIONTYPES_H

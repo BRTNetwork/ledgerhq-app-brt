@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,13 +16,10 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#pragma once
+#ifndef LEDGER_APP_BRT_ARRAY_H
+#define LEDGER_APP_BRT_ARRAY_H
 
-#include <stddef.h>
-#include <stdint.h>
+#define ARR_END 1
+#define OBJ_END 1
 
-#include "fields.h"
-
-bool read_hex(char *dst, size_t dst_size, uint8_t *src, size_t src_size);
-
-uint64_t read_unsigned64(const uint8_t *src);
+#endif  // LEDGER_APP_BRT_ARRAY_H

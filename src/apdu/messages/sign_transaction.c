@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -24,7 +24,7 @@
 #include "../global.h"
 #include "../transaction/transaction.h"
 #include "../ui/main/idle_menu.h"
-#include "../../xrp/xrp_helpers.h"
+#include "../../brt/brt_helpers.h"
 
 static const uint8_t prefix_length = 4;
 static const uint8_t suffix_length = 20;
@@ -78,15 +78,15 @@ void sign_transaction() {
                 cx_ecfp_public_key_t public_key;
 
                 // Re-use old buffer to save RAM
-                xrp_pubkey_t *public_key_data = (xrp_pubkey_t *) private_key_data;
-                uint8_t *suffix_data = private_key_data + XRP_PUBKEY_SIZE;
+                brt_pubkey_t *public_key_data = (brt_pubkey_t *) private_key_data;
+                uint8_t *suffix_data = private_key_data + BRT_PUBKEY_SIZE;
 
                 cx_ecfp_generate_pair(tmp_ctx.transaction_context.curve,
                                       &public_key,
                                       &private_key,
                                       1);
-                xrp_compress_public_key(&public_key, public_key_data);
-                xrp_public_key_hash160(public_key_data, suffix_data);
+                brt_compress_public_key(&public_key, public_key_data);
+                brt_public_key_hash160(public_key_data, suffix_data);
 
                 memmove(
                     tmp_ctx.transaction_context.raw_tx + tmp_ctx.transaction_context.raw_tx_length,

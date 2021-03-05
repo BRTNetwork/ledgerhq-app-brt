@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,8 +16,8 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_AMOUNT_H
-#define LEDGER_APP_XRP_AMOUNT_H
+#ifndef LEDGER_APP_BRT_AMOUNT_H
+#define LEDGER_APP_BRT_AMOUNT_H
 
 #include <stdbool.h>
 #include "fields.h"
@@ -27,7 +27,7 @@ void currency_formatter(field_t* field, field_value_t* dst);
 
 bool has_non_standard_currency(field_t* field);
 
-#define XRP_AMOUNT_LEN      8
+#define BRT_AMOUNT_LEN      8
 #define ISSUED_CURRENCY_LEN 48
 
-#endif  // LEDGER_APP_XRP_AMOUNT_H
+#endif  // LEDGER_APP_BRT_AMOUNT_H

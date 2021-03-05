@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,17 +16,33 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_FLAGS_H
-#define LEDGER_APP_XRP_FLAGS_H
+#ifndef LEDGER_APP_BRT_BRTPARSE_H
+#define LEDGER_APP_BRT_BRTPARSE_H
 
 #include <stdbool.h>
+
+#include "os.h"
+#include "cx.h"
 #include "fields.h"
+#include "../limitations.h"
 
-// Universal Transaction flags (hidden)
-#define TF_FULLY_CANONICAL_SIG 0x80000000u
+typedef struct {
+    uint8_t num_fields;
+    field_t fields[MAX_FIELD_COUNT];
+} parseResult_t;
 
-bool is_flag(field_t* field);
-bool is_flag_hidden(field_t* field);
-void format_flags(field_t* field, field_value_t* dst);
+typedef struct {
+    uint16_t transaction_type;
+    bool has_empty_pub_key;
+    uint8_t *data;
+    uint32_t length;
+    uint32_t offset;
+    parseResult_t result;
+    uint8_t current_array;
+    uint8_t array_index1;
+    uint8_t array_index2;
+} parseContext_t;
 
-#endif  // LEDGER_APP_XRP_FLAGS_H
+int parse_tx(parseContext_t *parse_context);
+
+#endif  // LEDGER_APP_BRT_BRTPARSE_H

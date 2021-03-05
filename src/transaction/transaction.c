@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,12 @@
 #include "../ui/transaction/review_menu.h"
 #include "../ui/other/loading.h"
 #include "../apdu/global.h"
-#include "../xrp/transaction_types.h"
-#include "../xrp/fields.h"
-#include "../xrp/amount.h"
-#include "../xrp/format.h"
-#include "../xrp/readers.h"
-#include "../xrp/xrp_helpers.h"
+#include "../brt/transaction_types.h"
+#include "../brt/fields.h"
+#include "../brt/amount.h"
+#include "../brt/format.h"
+#include "../brt/readers.h"
+#include "../brt/brt_helpers.h"
 #include <string.h>
 
 static action_t approval_action;
@@ -65,7 +65,7 @@ static bool check_field(const field_t *field,
             ret = (field->data.u32 == (uint32_t) value);
             break;
         case STI_AMOUNT:
-            ret = (field->length == XRP_AMOUNT_LEN && read_unsigned64(field->data.ptr) == value);
+            ret = (field->length == BRT_AMOUNT_LEN && read_unsigned64(field->data.ptr) == value);
             break;
         default:
             ret = false;
@@ -102,19 +102,19 @@ bool check_swap_conditions_and_sign(parseResult_t *transaction) {
     size_t step_index = 0;
     field_t *field = &transaction->fields[step_index++];
     // "Transaction Type" field
-    if (!check_field(field, STI_UINT16, XRP_UINT16_TRANSACTION_TYPE, true, TRANSACTION_PAYMENT)) {
+    if (!check_field(field, STI_UINT16, BRT_UINT16_TRANSACTION_TYPE, true, TRANSACTION_PAYMENT)) {
         return false;
     }
 
     // "Account" field
     field = &transaction->fields[step_index++];
-    if (!check_field(field, STI_ACCOUNT, XRP_ACCOUNT_ACCOUNT, false, 0)) {
+    if (!check_field(field, STI_ACCOUNT, BRT_ACCOUNT_ACCOUNT, false, 0)) {
         return false;
     }
 
     // "Destination Tag" field
     field = &transaction->fields[step_index++];
-    if (!check_field(field, STI_UINT32, XRP_VL_MEMO_FORMAT, false, 0)) {
+    if (!check_field(field, STI_UINT32, BRT_VL_MEMO_FORMAT, false, 0)) {
         return false;
     }
 
@@ -132,7 +132,7 @@ bool check_swap_conditions_and_sign(parseResult_t *transaction) {
         return false;
     }
     amount |= 0x4000000000000000;
-    if (!check_field(field, STI_AMOUNT, XRP_UINT64_AMOUNT, true, amount)) {
+    if (!check_field(field, STI_AMOUNT, BRT_UINT64_AMOUNT, true, amount)) {
         return false;
     }
 
@@ -143,19 +143,19 @@ bool check_swap_conditions_and_sign(parseResult_t *transaction) {
         return false;
     }
     fee |= 0x4000000000000000;
-    if (!check_field(field, STI_AMOUNT, XRP_UINT64_FEE, true, fee)) {
+    if (!check_field(field, STI_AMOUNT, BRT_UINT64_FEE, true, fee)) {
         return false;
     }
 
     field = &transaction->fields[step_index++];
-    if (!check_field(field, STI_ACCOUNT, XRP_ACCOUNT_DESTINATION, false, 0)) {
+    if (!check_field(field, STI_ACCOUNT, BRT_ACCOUNT_DESTINATION, false, 0)) {
         return false;
     }
 
     // "Destination" field
-    xrp_address_t destination;
-    xrp_account_t *account = (xrp_account_t *) field->data.account;
-    size_t addr_length = xrp_public_key_to_encoded_base58(NULL, account, &destination, 0);
+    brt_address_t destination;
+    brt_account_t *account = (brt_account_t *) field->data.account;
+    size_t addr_length = brt_public_key_to_encoded_base58(NULL, account, &destination, 0);
     if (strncmp(destination.buf, approval_strings.swap.address, addr_length) != 0) {
         return false;
     }

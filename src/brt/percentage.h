@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +15,8 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_PERCENTAGE_H
-#define LEDGER_APP_XRP_PERCENTAGE_H
+#ifndef LEDGER_APP_BRT_PERCENTAGE_H
+#define LEDGER_APP_BRT_PERCENTAGE_H
 
 #include <stdbool.h>
 #include "fields.h"
@@ -24,4 +24,4 @@
 bool is_percentage(field_t* field);
 void format_percentage(field_t* field, field_value_t* dst);
 
-#endif  // LEDGER_APP_XRP_PERCENTAGE_H
+#endif  // LEDGER_APP_BRT_PERCENTAGE_H

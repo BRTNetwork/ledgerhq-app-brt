@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -21,7 +21,7 @@
 
 #include "amount.h"
 #include "format.h"
-#include "xrp_helpers.h"
+#include "brt_helpers.h"
 #include "readers.h"
 #include "number_helpers.h"
 #include "../limitations.h"
@@ -126,13 +126,13 @@ static int parse_decimal_number(char *dst,
     return 0;
 }
 
-static int format_xrp(uint64_t amount, field_value_t *dst) {
+static int format_brt(uint64_t amount, field_value_t *dst) {
     if (!(amount & 0x4000000000000000)) {
         return -1;
     }
 
     amount ^= 0x4000000000000000;
-    if (xrp_print_amount(amount, dst->buf, sizeof(dst->buf)) != 0) {
+    if (brt_print_amount(amount, dst->buf, sizeof(dst->buf)) != 0) {
         return -1;
     }
 
@@ -160,27 +160,27 @@ bool has_non_standard_currency(field_t *field) {
 static void format_standard_currency(uint8_t *currency_data, char *buf, size_t size) {
     if (has_non_standard_currency_internal(currency_data)) {
     } else if (is_all_zeros(currency_data, 20)) {
-        // Special case for XRP currency
-        strncpy(buf, "XRP", size);
+        // Special case for BRT currency
+        strncpy(buf, "BRT", size);
     } else {
         // Standard currency code
         memcpy(buf, &currency_data[12], 3);
     }
 }
 
-static void format_non_standard_currency(xrp_currency_t *currency, field_value_t *dst) {
+static void format_non_standard_currency(brt_currency_t *currency, field_value_t *dst) {
     if (has_non_standard_currency_internal(currency->buf)) {
         // Nonstandard currency code
         bool contains_only_ascii = is_purely_ascii(currency->buf, sizeof(currency->buf), true);
         if (contains_only_ascii && currency->buf[sizeof(currency->buf) - 1] == '\x00' &&
-            strstr((char *) currency->buf, "XRP")) {
+            strstr((char *) currency->buf, "BRT")) {
             memcpy(dst->buf, currency->buf, 20);
         } else {
             read_hex(dst->buf, sizeof(dst->buf), currency->buf, sizeof(currency->buf));
         }
     } else if (is_all_zeros(currency->buf, sizeof(currency->buf))) {
-        // Special case for XRP currency
-        strncpy(dst->buf, "XRP", sizeof(dst->buf));
+        // Special case for BRT currency
+        strncpy(dst->buf, "BRT", sizeof(dst->buf));
     } else {
         // Standard currency code
         memcpy(dst->buf, &currency->buf[12], 3);
@@ -221,8 +221,8 @@ void amount_formatter(field_t *field, field_value_t *dst) {
     uint64_t value = read_unsigned64(field->data.ptr);
     int error;
 
-    if (field->length == XRP_AMOUNT_LEN) {
-        error = format_xrp(value, dst);
+    if (field->length == BRT_AMOUNT_LEN) {
+        error = format_brt(value, dst);
     } else if (field->length == ISSUED_CURRENCY_LEN) {
         format_standard_currency(&field->data.ptr[8], dst->buf, sizeof(dst->buf));
         error = format_issued_currency(value, dst->buf, sizeof(dst->buf));
@@ -236,6 +236,6 @@ void amount_formatter(field_t *field, field_value_t *dst) {
 }
 
 void currency_formatter(field_t *field, field_value_t *dst) {
-    xrp_currency_t *currency = (xrp_currency_t *) field->data.ptr;
+    brt_currency_t *currency = (brt_currency_t *) field->data.ptr;
     format_non_standard_currency(currency, dst);
 }

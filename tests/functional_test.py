@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-./speculos.py --log-level automation:DEBUG --automation file:$HOME/app-xrp/tests/automation.json ~/app-xrp/bin/app.elf &
+./speculos.py --log-level automation:DEBUG --automation file:$HOME/app-brt/tests/automation.json ~/app-brt/bin/app.elf &
 
 export LEDGER_PROXY_ADDRESS=127.0.0.1 LEDGER_PROXY_PORT=9999
 pytest-3 -v -s

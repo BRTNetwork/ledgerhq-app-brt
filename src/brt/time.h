@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,11 +15,15 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_FIELDSORT_H
-#define LEDGER_APP_XRP_FIELDSORT_H
+#ifndef LEDGER_APP_BRT_TIME_H
+#define LEDGER_APP_BRT_TIME_H
 
-#include "xrp_parse.h"
+#include <stdbool.h>
+#include "fields.h"
 
-void sort_fields(parseResult_t *result);
+bool is_time(field_t* field);
+bool is_time_delta(field_t* field);
+void format_time(field_t* field, field_value_t* dst);
+void format_time_delta(field_t* field, field_value_t* dst);
 
-#endif  // LEDGER_APP_XRP_FIELDSORT_H
+#endif  // LEDGER_APP_BRT_TIME_H

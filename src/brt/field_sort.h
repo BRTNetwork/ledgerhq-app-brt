@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +15,11 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#include "number_helpers.h"
+#ifndef LEDGER_APP_BRT_FIELDSORT_H
+#define LEDGER_APP_BRT_FIELDSORT_H
 
-char int_to_number_char(uint64_t value) {
-    if (value > 9) {
-        return '?';
-    }
+#include "brt_parse.h"
 
-    return (char) ('0' + value);
-}
+void sort_fields(parseResult_t *result);
+
+#endif  // LEDGER_APP_BRT_FIELDSORT_H

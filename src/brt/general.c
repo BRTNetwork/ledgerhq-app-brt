@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -22,7 +22,7 @@
 #include "readers.h"
 #include "format.h"
 #include "flags.h"
-#include "xrp_helpers.h"
+#include "brt_helpers.h"
 #include "time.h"
 #include "strings.h"
 #include "../limitations.h"
@@ -121,11 +121,11 @@ void hash_formatter256(field_t* field, field_value_t* dst) {
 
 static bool should_format_blob_as_string(field_t* field) {
     switch (field->id) {
-        case XRP_VL_DOMAIN:
-        case XRP_VL_MEMO_TYPE:
-        case XRP_VL_MEMO_FORMAT:
+        case BRT_VL_DOMAIN:
+        case BRT_VL_MEMO_TYPE:
+        case BRT_VL_MEMO_FORMAT:
             return true;
-        case XRP_VL_MEMO_DATA:
+        case BRT_VL_MEMO_DATA:
             return is_purely_ascii(field->data.ptr, field->length, false);
         default:
             return false;
@@ -158,9 +158,9 @@ void account_formatter(field_t* field, field_value_t* dst) {
     }
 
     // Write full address to dst + ADDR_DST_OFFSET
-    xrp_account_t* account = field->data.account;
-    xrp_address_t* address = (xrp_address_t*) (dst->buf + ADDR_DST_OFFSET);
-    uint16_t addr_length = xrp_public_key_to_encoded_base58(NULL, account, address, 0);
+    brt_account_t* account = field->data.account;
+    brt_address_t* address = (brt_address_t*) (dst->buf + ADDR_DST_OFFSET);
+    uint16_t addr_length = brt_public_key_to_encoded_base58(NULL, account, address, 0);
 
     if (DISPLAY_SEGMENTED_ADDR && addr_length <= PAGE_W * 3) {
         // If the application is configured to split addresses on the target

@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,9 +28,9 @@
 bool is_percentage(field_t *field) {
     if (field->data_type == STI_UINT32) {
         switch (field->id) {
-            case XRP_UINT32_TRANSFER_RATE:
-            case XRP_UINT32_QUALITY_IN:
-            case XRP_UINT32_QUALITY_OUT:
+            case BRT_UINT32_TRANSFER_RATE:
+            case BRT_UINT32_QUALITY_IN:
+            case BRT_UINT32_QUALITY_OUT:
                 return true;
             default:
                 return false;
@@ -93,7 +93,7 @@ static void format_quality(field_value_t *dst, uint32_t value) {
 void format_percentage(field_t *field, field_value_t *dst) {
     uint32_t value = field->data.u32;
 
-    if (field->id == XRP_UINT32_TRANSFER_RATE) {
+    if (field->id == BRT_UINT32_TRANSFER_RATE) {
         format_transfer_rate(dst, value);
     } else {
         format_quality(dst, value);

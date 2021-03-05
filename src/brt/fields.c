@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@
     if (field->data_type == (t) && field->id == (i) && field->array_info.type == 0) return true
 
 bool is_normal_account_field(field_t *field) {
-    return field->data_type == STI_ACCOUNT && field->id == XRP_ACCOUNT_ACCOUNT &&
+    return field->data_type == STI_ACCOUNT && field->id == BRT_ACCOUNT_ACCOUNT &&
            field->array_info.type == 0;
 }
 
@@ -228,9 +228,9 @@ const char *resolve_field_name(field_t *field) {
 }
 
 bool is_field_hidden(field_t *field) {
-    HIDE(STI_UINT32, XRP_UINT32_SEQUENCE);
-    HIDE(STI_UINT32, XRP_UINT32_LAST_LEDGER_SEQUENCE);
-    HIDE(STI_VL, XRP_VL_SIGNING_PUB_KEY);
+    HIDE(STI_UINT32, BRT_UINT32_SEQUENCE);
+    HIDE(STI_UINT32, BRT_UINT32_LAST_LEDGER_SEQUENCE);
+    HIDE(STI_VL, BRT_VL_SIGNING_PUB_KEY);
 
     if (field->data_type == STI_ARRAY || field->data_type == STI_OBJECT ||
         field->data_type == STI_PATHSET) {

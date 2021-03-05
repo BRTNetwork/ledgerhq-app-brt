@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,9 +45,9 @@ typedef struct {
 bool is_time(field_t *field) {
     if (field->data_type == STI_UINT32) {
         switch (field->id) {
-            case XRP_UINT32_EXPIRATION:
-            case XRP_UINT32_CANCEL_AFTER:
-            case XRP_UINT32_FINISH_AFTER:
+            case BRT_UINT32_EXPIRATION:
+            case BRT_UINT32_CANCEL_AFTER:
+            case BRT_UINT32_FINISH_AFTER:
                 return true;
             default:
                 return false;
@@ -58,7 +58,7 @@ bool is_time(field_t *field) {
 }
 
 bool is_time_delta(field_t *field) {
-    return field->data_type == STI_UINT32 && field->id == XRP_UINT32_SETTLE_DELAY;
+    return field->data_type == STI_UINT32 && field->id == BRT_UINT32_SETTLE_DELAY;
 }
 
 // Inspired from http://git.musl-libc.org/cgit/musl/tree/src/time/__secs_to_tm.c?h=v0.9.15

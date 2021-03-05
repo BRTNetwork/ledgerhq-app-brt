@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -18,8 +18,8 @@
 
 #include <string.h>
 
-#include "xrp_parse.h"
-#include "xrp_helpers.h"
+#include "brt_parse.h"
+#include "brt_helpers.h"
 #include "amount.h"
 #include "array.h"
 #include "fields.h"
@@ -183,7 +183,7 @@ err_t read_amount(parseContext_t *context, field_t *field) {
 
     CHECK(peak_next_byte(context, &first_byte));
     if ((first_byte >> 7u) == 0) {
-        CHECK(read_fixed_size_field(context, field, XRP_AMOUNT_LEN));
+        CHECK(read_fixed_size_field(context, field, BRT_AMOUNT_LEN));
     } else {
         CHECK(read_fixed_size_field(context, field, ISSUED_CURRENCY_LEN));
 
@@ -191,17 +191,17 @@ err_t read_amount(parseContext_t *context, field_t *field) {
             field_t *currency;
             CHECK(append_new_field(context, &currency));
             currency->data_type = STI_CURRENCY;
-            currency->id = XRP_CURRENCY_CURRENCY;
-            currency->data.currency = (xrp_currency_t *) (field->data.ptr + 8);
-            currency->length = XRP_CURRENCY_SIZE;
+            currency->id = BRT_CURRENCY_CURRENCY;
+            currency->data.currency = (brt_currency_t *) (field->data.ptr + 8);
+            currency->length = BRT_CURRENCY_SIZE;
         }
 
         field_t *issuer;
         CHECK(append_new_field(context, &issuer));
         issuer->data_type = STI_ACCOUNT;
-        issuer->id = XRP_ACCOUNT_ISSUER;
-        issuer->data.account = (xrp_account_t *) (field->data.ptr + 28);
-        issuer->length = XRP_ACCOUNT_SIZE;
+        issuer->id = BRT_ACCOUNT_ISSUER;
+        issuer->data.account = (brt_account_t *) (field->data.ptr + 28);
+        issuer->length = BRT_ACCOUNT_SIZE;
     }
 
     return err;
@@ -246,11 +246,11 @@ err_t handle_path_step(parseContext_t *context, field_t *field, uint8_t step_typ
     switch (step_type) {
         case 0x01:
             field->data_type = STI_ACCOUNT;
-            field->id = XRP_ACCOUNT_ACCOUNT;
+            field->id = BRT_ACCOUNT_ACCOUNT;
             break;
         case 0x20:
             field->data_type = STI_ACCOUNT;
-            field->id = XRP_ACCOUNT_ISSUER;
+            field->id = BRT_ACCOUNT_ISSUER;
             break;
         case 0x30:
             // Read the issuer separately
@@ -261,7 +261,7 @@ err_t handle_path_step(parseContext_t *context, field_t *field, uint8_t step_typ
             // which will be positioned before the issuer
         case 0x10:
             field->data_type = STI_CURRENCY;
-            field->id = XRP_CURRENCY_CURRENCY;
+            field->id = BRT_CURRENCY_CURRENCY;
             break;
         default:
             field->data_type = STI_PATHSET;
@@ -421,7 +421,7 @@ err_t post_process_field(parseContext_t *context, field_t *field) {
             break;
         case STI_UINT32:
             // Reject transaction if tfFullyCanonicalSig is not set
-            if (field->id == XRP_UINT32_FLAGS) {
+            if (field->id == BRT_UINT32_FLAGS) {
                 uint32_t value = field->data.u32;
                 if ((value & TF_FULLY_CANONICAL_SIG) == 0) {
                     err.err = 0x6800;
@@ -432,14 +432,14 @@ err_t post_process_field(parseContext_t *context, field_t *field) {
             break;
         case STI_VL:
             // Detect when SigningPubKey is empty (needed for multi-sign)
-            if (field->id == XRP_VL_SIGNING_PUB_KEY && field->length == 0) {
+            if (field->id == BRT_VL_SIGNING_PUB_KEY && field->length == 0) {
                 context->has_empty_pub_key = true;
             }
             break;
         case STI_ACCOUNT:
             // Safety check to capture the illegal case where an account
             // field is not 20 bytes long.
-            if (field->length != XRP_ACCOUNT_SIZE) {
+            if (field->length != BRT_ACCOUNT_SIZE) {
                 err.err = INVALID_STATE;
                 return err;
             }
@@ -462,7 +462,7 @@ err_t post_process_transaction(parseContext_t *context) {
         field_t *field;
         CHECK(append_new_field(context, &field));
         field->data_type = STI_ACCOUNT;
-        field->id = XRP_ACCOUNT_REGULAR_KEY;
+        field->id = BRT_ACCOUNT_REGULAR_KEY;
         field->data.ptr = NULL;  // Special value to indicate empty regular key
     }
 

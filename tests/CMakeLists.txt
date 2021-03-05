@@ -12,35 +12,35 @@ enable_testing()
 
 include_directories(include/ ../src)
 
-add_library(xrp
-  ../src/xrp/amount.c
-  ../src/xrp/amount.h
-  ../src/xrp/array.h
-  ../src/xrp/fields.c
-  ../src/xrp/fields.h
-  ../src/xrp/field_sort.c
-  ../src/xrp/field_sort.h
-  ../src/xrp/flags.c
-  ../src/xrp/flags.h
-  ../src/xrp/format.c
-  ../src/xrp/format.h
-  ../src/xrp/general.c
-  ../src/xrp/general.h
-  ../src/xrp/number_helpers.c
-  ../src/xrp/number_helpers.h
-  ../src/xrp/percentage.c
-  ../src/xrp/percentage.h
-  ../src/xrp/readers.c
-  ../src/xrp/readers.h
-  ../src/xrp/strings.c
-  ../src/xrp/strings.h
-  ../src/xrp/time.c
-  ../src/xrp/time.h
-  ../src/xrp/transaction_types.h
-  ../src/xrp/xrp_helpers.c
-  ../src/xrp/xrp_helpers.h
-  ../src/xrp/xrp_parse.c
-  ../src/xrp/xrp_parse.h
+add_library(brt
+  ../src/brt/amount.c
+  ../src/brt/amount.h
+  ../src/brt/array.h
+  ../src/brt/fields.c
+  ../src/brt/fields.h
+  ../src/brt/field_sort.c
+  ../src/brt/field_sort.h
+  ../src/brt/flags.c
+  ../src/brt/flags.h
+  ../src/brt/format.c
+  ../src/brt/format.h
+  ../src/brt/general.c
+  ../src/brt/general.h
+  ../src/brt/number_helpers.c
+  ../src/brt/number_helpers.h
+  ../src/brt/percentage.c
+  ../src/brt/percentage.h
+  ../src/brt/readers.c
+  ../src/brt/readers.h
+  ../src/brt/strings.c
+  ../src/brt/strings.h
+  ../src/brt/time.c
+  ../src/brt/time.h
+  ../src/brt/transaction_types.h
+  ../src/brt/brt_helpers.c
+  ../src/brt/brt_helpers.h
+  ../src/brt/brt_parse.c
+  ../src/brt/brt_parse.h
 )
 
 add_executable(test_printers
@@ -79,10 +79,10 @@ add_executable(fuzz_tx
 )
 
 target_compile_options(fuzz_tx PRIVATE -Wall -fsanitize=fuzzer,address -g -ggdb2)
-target_link_libraries(fuzz_tx PRIVATE cmocka crypto ssl xrp -fsanitize=fuzzer,address)
-target_link_libraries(test_printers PRIVATE cmocka crypto ssl xrp)
-target_link_libraries(test_swap PRIVATE cmocka crypto ssl xrp)
-target_link_libraries(test_tx PRIVATE cmocka crypto ssl xrp)
+target_link_libraries(fuzz_tx PRIVATE cmocka crypto ssl brt -fsanitize=fuzzer,address)
+target_link_libraries(test_printers PRIVATE cmocka crypto ssl brt)
+target_link_libraries(test_swap PRIVATE cmocka crypto ssl brt)
+target_link_libraries(test_tx PRIVATE cmocka crypto ssl brt)
 
 add_test(test_printers test_printers)
 add_test(test_swap test_swap)

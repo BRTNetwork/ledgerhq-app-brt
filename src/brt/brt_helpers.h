@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,34 +23,34 @@
 #include "cx.h"
 #include "fields.h"
 
-#define XRP_PUBKEY_SIZE  33
-#define XRP_ADDRESS_SIZE 41
+#define BRT_PUBKEY_SIZE  33
+#define BRT_ADDRESS_SIZE 41
 
 typedef struct {
-    uint8_t buf[XRP_PUBKEY_SIZE];
-} xrp_pubkey_t;
+    uint8_t buf[BRT_PUBKEY_SIZE];
+} brt_pubkey_t;
 
 typedef union {
-    xrp_pubkey_t pubkey;
-    xrp_account_t account;
-} xrp_pubkey_or_account;
+    brt_pubkey_t pubkey;
+    brt_account_t account;
+} brt_pubkey_or_account;
 
 typedef struct {
-    char buf[XRP_ADDRESS_SIZE];
-} xrp_address_t;
+    char buf[BRT_ADDRESS_SIZE];
+} brt_address_t;
 
-void xrp_public_key_hash160(xrp_pubkey_t *pubkey, uint8_t *out);
+void brt_public_key_hash160(brt_pubkey_t *pubkey, uint8_t *out);
 
-size_t xrp_public_key_to_encoded_base58(xrp_pubkey_t *pubkey,
-                                        xrp_account_t *account,
-                                        xrp_address_t *out,
+size_t brt_public_key_to_encoded_base58(brt_pubkey_t *pubkey,
+                                        brt_account_t *account,
+                                        brt_address_t *out,
                                         uint16_t version);
 
-void xrp_compress_public_key(cx_ecfp_public_key_t *public_key, xrp_pubkey_t *out);
+void brt_compress_public_key(cx_ecfp_public_key_t *public_key, brt_pubkey_t *out);
 
-void get_address(cx_ecfp_public_key_t *pubkey, xrp_address_t *address);
+void get_address(cx_ecfp_public_key_t *pubkey, brt_address_t *address);
 
-int xrp_print_amount(uint64_t amount, char *out, size_t outlen);
+int brt_print_amount(uint64_t amount, char *out, size_t outlen);
 
 bool parse_bip32_path(uint8_t *path,
                       size_t path_length,

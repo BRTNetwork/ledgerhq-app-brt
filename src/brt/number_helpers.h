@@ -1,6 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
- *   (c) 2017 Ledger
+ *   BRT Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,31 +15,8 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#include <string.h>
+#pragma once
 
-#include "readers.h"
+#include <stdint.h>
 
-uint64_t read_unsigned64(const uint8_t *src) {
-    uint64_t value = 0;
-    const size_t num_bytes = 8;
-    for (uint8_t i = 0; i < num_bytes; ++i) {
-        value |= (uint64_t) src[i] << (num_bytes * 8u - i * 8u - 8u);
-    }
-
-    return value;
-}
-
-static char hex(uint8_t n) {
-    return n >= 10 ? 'a' + (n - 10) : '0' + n;
-}
-
-bool read_hex(char *dst, size_t dst_size, uint8_t *src, size_t src_size) {
-    size_t i;
-
-    for (i = 0; i < src_size && i * 2 + 1 < dst_size; i++) {
-        dst[i * 2 + 0] = hex(src[i] >> 4);
-        dst[i * 2 + 1] = hex(src[i] & 0xf);
-    }
-
-    return i == src_size;
-}
+char int_to_number_char(uint64_t value);

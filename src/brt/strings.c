@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,10 +16,26 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_ARRAY_H
-#define LEDGER_APP_XRP_ARRAY_H
+#include "strings.h"
 
-#define ARR_END 1
-#define OBJ_END 1
+bool is_purely_ascii(const uint8_t *data, uint16_t length, bool allow_suffix) {
+    bool tracking_suffix = false;
 
-#endif  // LEDGER_APP_XRP_ARRAY_H
+    for (uint16_t i = 0; i < length; ++i) {
+        if (tracking_suffix && data[i] != 0) {
+            // The suffix can only contain null bytes
+            return false;
+        }
+
+        if (data[i] == 0 && i > 0 && allow_suffix) {
+            tracking_suffix = true;
+            continue;
+        }
+
+        if (data[i] < 32 || data[i] > 126) {
+            return false;
+        }
+    }
+
+    return true;
+}

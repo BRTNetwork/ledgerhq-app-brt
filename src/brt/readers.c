@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,26 +16,31 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#include "strings.h"
+#include <string.h>
 
-bool is_purely_ascii(const uint8_t *data, uint16_t length, bool allow_suffix) {
-    bool tracking_suffix = false;
+#include "readers.h"
 
-    for (uint16_t i = 0; i < length; ++i) {
-        if (tracking_suffix && data[i] != 0) {
-            // The suffix can only contain null bytes
-            return false;
-        }
-
-        if (data[i] == 0 && i > 0 && allow_suffix) {
-            tracking_suffix = true;
-            continue;
-        }
-
-        if (data[i] < 32 || data[i] > 126) {
-            return false;
-        }
+uint64_t read_unsigned64(const uint8_t *src) {
+    uint64_t value = 0;
+    const size_t num_bytes = 8;
+    for (uint8_t i = 0; i < num_bytes; ++i) {
+        value |= (uint64_t) src[i] << (num_bytes * 8u - i * 8u - 8u);
     }
 
-    return true;
+    return value;
+}
+
+static char hex(uint8_t n) {
+    return n >= 10 ? 'a' + (n - 10) : '0' + n;
+}
+
+bool read_hex(char *dst, size_t dst_size, uint8_t *src, size_t src_size) {
+    size_t i;
+
+    for (i = 0; i < src_size && i * 2 + 1 < dst_size; i++) {
+        dst[i * 2 + 0] = hex(src[i] >> 4);
+        dst[i * 2 + 1] = hex(src[i] & 0xf);
+    }
+
+    return i == src_size;
 }

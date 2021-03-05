@@ -1,7 +1,7 @@
 #include <string.h>
 
-#include "xrp_pub_key.h"
-#include "xrp_helpers.h"
+#include "brt_pub_key.h"
+#include "brt_helpers.h"
 
 /* return 0 on success */
 int get_public_key(cx_curve_t curve,

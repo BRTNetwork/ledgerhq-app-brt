@@ -2,8 +2,8 @@
 
 #include "handle_check_address.h"
 #include "os.h"
-#include "../xrp/xrp_helpers.h"
-#include "../xrp/xrp_pub_key.h"
+#include "../brt/brt_helpers.h"
+#include "../brt/brt_pub_key.h"
 
 static int os_strcmp(const char* s1, const char* s2) {
     size_t size = strlen(s1) + 1;
@@ -30,7 +30,7 @@ int handle_check_address(check_address_parameters_t* params) {
         return 0;
     }
 
-    xrp_address_t address;
+    brt_address_t address;
     get_address(&public_key, &address);
 
     if (os_strcmp(address.buf, params->address_to_check) != 0) {

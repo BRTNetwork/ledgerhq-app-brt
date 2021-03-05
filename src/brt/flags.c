@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -28,8 +28,8 @@
 
 bool is_flag(field_t *field) {
     return field->data_type == STI_UINT32 &&
-           (field->id == XRP_UINT32_FLAGS || field->id == XRP_UINT32_SET_FLAG ||
-            field->id == XRP_UINT32_CLEAR_FLAG);
+           (field->id == BRT_UINT32_FLAGS || field->id == BRT_UINT32_SET_FLAG ||
+            field->id == BRT_UINT32_CLEAR_FLAG);
 }
 
 bool is_flag_hidden(field_t *field) {
@@ -75,8 +75,8 @@ static void format_account_set_transaction_flags(uint32_t value, field_value_t *
 #define TF_OPTIONAL_DEST_TAG 0x00020000u
 #define TF_REQUIRE_AUTH      0x00040000u
 #define TF_OPTIONAL_AUTH     0x00080000u
-#define TF_DISALLOW_XRP      0x00100000u
-#define TF_ALLOW_XRP         0x00200000u
+#define TF_DISALLOW_BRT      0x00100000u
+#define TF_ALLOW_BRT         0x00200000u
 
     size_t offset = 0;
     if (HAS_FLAG(value, TF_REQUIRE_DEST_TAG)) {
@@ -95,12 +95,12 @@ static void format_account_set_transaction_flags(uint32_t value, field_value_t *
         offset = append_item(dst, offset, "Optional Auth");
     }
 
-    if (HAS_FLAG(value, TF_DISALLOW_XRP)) {
-        offset = append_item(dst, offset, "Disallow XRP");
+    if (HAS_FLAG(value, TF_DISALLOW_BRT)) {
+        offset = append_item(dst, offset, "Disallow BRT");
     }
 
-    if (HAS_FLAG(value, TF_ALLOW_XRP)) {
-        offset = append_item(dst, offset, "Allow XRP");
+    if (HAS_FLAG(value, TF_ALLOW_BRT)) {
+        offset = append_item(dst, offset, "Allow BRT");
     }
 }
 
@@ -110,7 +110,7 @@ static const char *format_account_set_field_flags(uint32_t value) {
 #define ASF_DEFAULT_RIPPLE 8
 #define ASF_DEPOSIT_AUTH   9
 #define ASF_DISABLE_MASTER 4
-#define ASF_DISALLOW_XRP   3
+#define ASF_DISALLOW_BRT   3
 #define ASF_GLOBAL_FREEZE  7
 #define ASF_NO_FREEZE      6
 #define ASF_REQUIRE_AUTH   2
@@ -126,8 +126,8 @@ static const char *format_account_set_field_flags(uint32_t value) {
             return "Deposit Auth";
         case ASF_DISABLE_MASTER:
             return "Disable Master";
-        case ASF_DISALLOW_XRP:
-            return "Disallow XRP";
+        case ASF_DISALLOW_BRT:
+            return "Disallow BRT";
         case ASF_GLOBAL_FREEZE:
             return "Global Freeze";
         case ASF_NO_FREEZE:
@@ -142,7 +142,7 @@ static const char *format_account_set_field_flags(uint32_t value) {
 }
 
 static void format_account_set_flags(field_t *field, uint32_t value, field_value_t *dst) {
-    if (field->id == XRP_UINT32_FLAGS) {
+    if (field->id == BRT_UINT32_FLAGS) {
         format_account_set_transaction_flags(value, dst);
     } else {
         const char *flag = format_account_set_field_flags(value);

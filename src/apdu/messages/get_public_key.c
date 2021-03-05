@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   BRT Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -23,19 +23,19 @@
 #include "get_public_key.h"
 #include "../constants.h"
 #include "../global.h"
-#include "../../xrp/xrp_helpers.h"
-#include "../../xrp/xrp_pub_key.h"
-#include "../../xrp/xrp_parse.h"
+#include "../../brt/brt_helpers.h"
+#include "../../brt/brt_pub_key.h"
+#include "../../brt/brt_parse.h"
 #include "../../ui/address/address_ui.h"
 #include "../../ui/main/idle_menu.h"
 
 uint32_t set_result_get_public_key() {
     uint32_t tx = 0;
     uint32_t address_length = strlen(tmp_ctx.public_key_context.address.buf);
-    G_io_apdu_buffer[tx++] = XRP_PUBKEY_SIZE;
-    xrp_pubkey_t *pubkey = (xrp_pubkey_t *) (G_io_apdu_buffer + tx);
-    xrp_compress_public_key(&tmp_ctx.public_key_context.public_key, pubkey);
-    tx += XRP_PUBKEY_SIZE;
+    G_io_apdu_buffer[tx++] = BRT_PUBKEY_SIZE;
+    brt_pubkey_t *pubkey = (brt_pubkey_t *) (G_io_apdu_buffer + tx);
+    brt_compress_public_key(&tmp_ctx.public_key_context.public_key, pubkey);
+    tx += BRT_PUBKEY_SIZE;
     G_io_apdu_buffer[tx++] = address_length;
     memmove(G_io_apdu_buffer + tx, tmp_ctx.public_key_context.address.buf, address_length);
     tx += address_length;
