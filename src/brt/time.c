@@ -24,9 +24,9 @@
 #include "format.h"
 #include "../limitations.h"
 
-/* 2000-03-01 (mod 400 year, immediately after feb29 */
-#define LEAPOCH             (946684800LL + 86400 * (31 + 29))
-#define RIPPLE_EPOCH_OFFSET 946684800LL
+/* 2021-03-01 (mod 400 year, immediately after feb29 */
+#define LEAPOCH             (1614556800LL + 86400 * (31 + 29))
+#define RIPPLE_EPOCH_OFFSET 1614556800LL
 #define FINAL_EPOCH_OFFSET  (RIPPLE_EPOCH_OFFSET - LEAPOCH)
 
 #define DAYS_PER_400Y (365 * 400 + 97)
