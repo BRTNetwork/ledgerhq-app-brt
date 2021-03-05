@@ -46,7 +46,7 @@ static const char *testcases[] = {
     "../testcases/04-escrow-finish/02-condition-based.raw",
     "../testcases/05-escrow-cancel/01-basic.raw",
     "../testcases/06-account-set/01-basic.raw",
-    "../testcases/06-account-set/02-default-ripple.raw",
+    "../testcases/06-account-set/02-default-brt.raw",
     "../testcases/06-account-set/03-deposit-auth.raw",
     "../testcases/06-account-set/04-disable-master.raw",
     "../testcases/06-account-set/05-disallow-brt.raw",

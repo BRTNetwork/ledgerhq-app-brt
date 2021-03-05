@@ -62,7 +62,7 @@ bool is_time_delta(field_t *field) {
 }
 
 // Inspired from http://git.musl-libc.org/cgit/musl/tree/src/time/__secs_to_tm.c?h=v0.9.15
-static int ripple_epoch_to_tm(long long t, tm_mini_t *tm) {
+static int brt_epoch_to_tm(long long t, tm_mini_t *tm) {
     long long days, secs;
     int remdays, remsecs, remyears;
     int qc_cycles, c_cycles, q_cycles;
@@ -144,7 +144,7 @@ void format_time(field_t *field, field_value_t *dst) {
     uint32_t value = field->data.u32;
 
     tm_mini_t tm;
-    ripple_epoch_to_tm(value, &tm);
+    brt_epoch_to_tm(value, &tm);
 
     print_time(&tm, dst);
 }

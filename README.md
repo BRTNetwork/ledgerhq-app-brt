@@ -79,7 +79,7 @@ An example of a basic payment transaction using this library is shown below:
 import Transport from "@ledgerhq/hw-transport-node-hid";
 // import Transport from "@ledgerhq/hw-transport-u2f"; // for browser
 import Brt from "@ledgerhq/hw-app-brt";
-import { encode } from 'ripple-binary-codec';
+import { encode } from 'brt-binary-codec';
 
 function establishConnection() {
     return Transport.create()
