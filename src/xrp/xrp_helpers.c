@@ -28,11 +28,11 @@ typedef struct {
     uint8_t length;
 } base58_buf_t;
 
-static const char bas_e58_alphabet[] = {'r', 'p', 's', 'h', 'n', 'a', 'f', '3', '9', 'w', 'B', 'U',
-                                        'D', 'N', 'E', 'G', 'H', 'J', 'K', 'L', 'M', '4', 'P', 'Q',
-                                        'R', 'S', 'T', '7', 'V', 'W', 'X', 'Y', 'Z', '2', 'b', 'c',
-                                        'd', 'e', 'C', 'g', '6', '5', 'j', 'k', 'm', '8', 'o', 'F',
-                                        'q', 'i', '1', 't', 'u', 'v', 'A', 'x', 'y', 'z'};
+static const char bas_e58_alphabet[] = {'b', 'r', 't', 's', 'h', 'n', 'a', 'f', '3', '9', 'w', 'B', 
+                                        'U', 'D', 'N', 'E', 'G', 'H', 'J', 'K', 'L', 'M', '4', 'P', 
+                                        'Q', 'R', 'S', 'T', '7', 'V', 'W', 'X', 'Y', 'Z', '2', 'p', 
+                                        'c', 'd', 'e', 'C', 'g', '6', '5', 'j', 'k', 'm', '8', 'o', 
+                                        'F', 'q', 'i', '1', 'u', 'v', 'A', 'x', 'y', 'z'};
 
 static size_t xrp_encode_base58_address(const base58_buf_t *in, xrp_address_t *out) {
     unsigned char buffer[MAX_ENC_INPUT_SIZE * 138 / 100 + 1] = {0};
